@@ -2,168 +2,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clock Page</title>
 
-    <style>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline:wght@400;700&display=swap" rel="stylesheet">
 
-        /*CSS RESETS*/
+  <style>
+    /* ===== Reset & Base ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body{
-    background-color: #FFFFFF00;
-    line-height: 1.6;
+    body {
+      background-color: rgba(255, 255, 255, 0); /* transparent background */
+      font-family: 'Big Shoulders Inline', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-}
+    /* ===== Card Styling ===== */
+    .card {
+      background-color: rgba(67, 217, 164, 0.85); /* semi-transparent */
+      color: #fff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+      display: inline-block;
+    }
 
-h1 {
-    margin-top: 0;
-}
+    .greet {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
 
+    .date {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
 
-/*CSS START*/
+    .clock {
+      font-size: 2em;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
 
-.full-table {
-    display: table;
-    height: 100%;
-    width: 100%;
-}
+    .time, .colon {
+      display: inline-block;
+    }
 
-.table-cell {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.card {
-    padding: 10px 10px 10px 10px;
-    border-radius: 10px;
-    background: #43d9a4;
-    color: #FFF;
-    display: inline-block;
-    box-shadow: 2px 2px 1px 0px #c3f73a;
-}
-
-.card:hover {
-    margin-top: 2px;
-    box-shadow: none;
-}
-
-.clock {
-    display: inline-block;
-    font-family: 'Big Shoulders Inline', sans-serif;
-    font-weight: bold;
-    font-size: 1.5em;
-    /* padding-left: 20px; */
-}
-
-.time {
-    display: inline-block;
-    min-width: 37px;
-}
-
-.colon {
-    font-size: 1.1em;
-    display: inline-block;
-}
-
-.date {
-    display: block;
-    min-width: 162px;
-    /* padding-right: 30px; */
-    /* border-right: 2px solid #295C7B; */
-    font-family: 'Big Shoulders Inline', sans-serif;
-    font-size: 1.2em;
-}
-.greet{
-    
-    min-width: 162px;
-    /* padding-right: 30px; */
-    font-family: 'Big Shoulders Inline', sans-serif;
-    font-size: 1.2em;
-}
-
-    </style>
+    .colon {
+      font-size: 1em;
+      align-self: flex-end;
+    }
+  </style>
 </head>
 <body>
-    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline:wght@400;700&display=swap" rel="stylesheet">
 
-<div class="full-table">
-  <div class="table-cell">
-    
-    <div class="card">
-        <div class="greet" id="greet"></div>
-      <div class="date" id="date"></div>
-      <div class="clock">
-        <div class="time" id="hour"></div>
-        <div class="colon">:</div>
-        <div class="time" id="min"></div>
-        <div class="colon">:</div>
-        <div class="time" id="sec"></div>
-      </div>
+  <div class="card">
+    <div class="greet" id="greet"></div>
+    <div class="date" id="date"></div>
+    <div class="clock">
+      <div class="time" id="hour"></div>
+      <div class="colon">:</div>
+      <div class="time" id="min"></div>
+      <div class="colon">:</div>
+      <div class="time" id="sec"></div>
     </div>
-    
   </div>
-</div>
 
-<script>
-    function date() {
-var today = new Date();
-document.getElementById('date').innerHTML = today.toDateString();
-}
+  <script>
+    function updateDate() {
+      const today = new Date();
+      document.getElementById('date').textContent = today.toDateString();
+    }
 
+    function updateClock() {
+      const today = new Date();
 
-function clock() {
-var today = new Date();
-var hour = zeros(twelveHour(today.getHours()));
-var minutes = zeros(today.getMinutes());
-var seconds = zeros(today.getSeconds());
-if(today.getHours() >=12){
-    seconds+=" pm"
-}
-else{
-    seconds+=" am"
-}
-hrs = today.getHours();
-if (hrs < 12)
-        greet = 'Good Morning Zeph';
-    else if (hrs >= 12 && hrs <= 17)
-        greet = 'Good Afternoon Zeph';
-    else if (hrs >= 17 && hrs <= 24)
-        greet = 'Good Evening Zeph';
-// console.log(today.toLocaleTimeString());
-document.getElementById('greet').innerHTML = greet;
-document.getElementById('hour').innerHTML = hour;
-document.getElementById('min').innerHTML = minutes;
-document.getElementById('sec').innerHTML = seconds;
-}
+      // Convert to 12-hour
+      let hrs = today.getHours();
+      const ampm = hrs >= 12 ? 'pm' : 'am';
+      hrs = hrs % 12 || 12;
 
-function twelveHour(hour) {
-if (hour > 12) {
-    return hour -= 12 
-} else if (hour === 0) {
-    return hour = 12;
-} else {
-    return hour
-}
-}
-// adds zero infront of single digit number
-function zeros(num) {
-if (num < 10) {
-    num = '0' + num
-};
-return num;
-}
+      const mins = String(today.getMinutes()).padStart(2, '0');
+      const secs = String(today.getSeconds()).padStart(2, '0');
 
-function dateTime() {
-date();
-clock();
-setTimeout(dateTime, 500);
-}
+      document.getElementById('hour').textContent = hrs;
+      document.getElementById('min').textContent = mins;
+      document.getElementById('sec').textContent = secs + ' ' + ampm;
 
-dateTime()
-// END
-</script>
+      // Greeting
+      let greetText;
+      if (today.getHours() < 12) greetText = 'Good Morning Zeph';
+      else if (today.getHours() < 17) greetText = 'Good Afternoon Zeph';
+      else greetText = 'Good Evening Zeph';
+
+      document.getElementById('greet').textContent = greetText;
+    }
+
+    function refreshTime() {
+      updateDate();
+      updateClock();
+      setTimeout(refreshTime, 500);
+    }
+
+    refreshTime();
+  </script>
 
 </body>
 </html>
+
