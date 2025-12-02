@@ -9,7 +9,13 @@
     <style>
 
         /*CSS RESETS*/
+const { transparent } = importModule('no-background')
 
+const widget = new ListWidget()
+widget.backgroundImage = await transparent(Script.name())
+
+/*the rest of your widget code*/
+        
 body{
     background-color: #fff;
     line-height: 1.6;
